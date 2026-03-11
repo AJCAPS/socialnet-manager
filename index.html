@@ -40,14 +40,16 @@
                 <!-- Add Profile -->
                 <label for="input-name" class="form-label fw-semibold small">Name</label>
                 <div class="input-group mb-2">
-                    <input type="text" id="input-name" class="form-control form-control-sm"
+                    <input type="text" id="input-add-name" class="form-control form-control-sm"
                         placeholder="Enter full name">
                     <button id="btn-add" class="btn btn-primary btn-sm">Add</button>
                 </div>
                 <!-- Look Up Profile -->
                 <div class="input-group mb-2">
-                    <input type="text" id="input-name" class="form-control sn-input mb-2"
-                    placeholder="Enter profile name" />
+                <input type="text" id="input-search-name"
+                class="form-control form-control-sm"
+                placeholder="Enter profile name">
+                <button id="btn-lookup" class="btn btn-secondary btn-sm">Look Up</button>
                 </div>
                 <!-- Delete Profile -->
                 <button id="btn-delete" class="btn btn-danger btn-sm w-100 mb-3">
@@ -55,8 +57,8 @@
                 </button>
                 <!-- Profile List -->
                 <p class="small fw-semibold text-muted mb-1">Profiles</p>
-                <div id="profile-list" class="profile-list-box"
-                <!-- Populated dynamically by JavaScript -->
+                <div id="profile-list" class="profile-list-box">
+                    <!-- Populated dynamically by JavaScript -->
                 </div>
             </div>
         </div>
@@ -94,6 +96,15 @@ sm"
 placeholder="New status message">
 <button id="btn-status" class="btn btn-primary btn-sm">Change</button>
 </div>
+<label class="form-label fw-semibold small">Change Favorite Quote</label>
+<div class="input-group mb-3">
+<input type="text" id="input-quote"
+class="form-control form-control-sm"
+placeholder="Enter favorite quote">
+<button id="btn-quote" class="btn btn-primary btn-sm">
+Update Quote
+</button>
+</div>
 <!-- Change Picture -->
 <label class="form-label fw-semibold small">Change Picture</label>
 <div class="input-group mb-3">
@@ -106,16 +117,18 @@ Picture</button>
 <!-- Add Friend -->
 <label class="form-label fw-semibold small">Add Friend</label>
 <div class="input-group mb-3">
-<input type="text" id="input-friend" class="form-control sn-input mb-2"
+<input type="text" id="input-friend" class="form-control sn-input mb-2">
 <button id="btn-add-friend" class="btn sn-btn-green flex-grow-1">Add
 Friend</button>
 </div>
 <!-- Remove Friend -->
 <label class="form-label fw-semibold small">Remove Friend</label>
 <div class="input-group mb-3">
+<input type="text" id="input-remove-friend"
+class="form-control form-control-sm"
 placeholder="Friend's full name">
-<button id="btn-remove-friend" class="btn sn-btn-orange flex-grow-
-1">Remove</button>
+<button id="btn-remove-friend"
+class="btn sn-btn-orange flex-grow-1">Remove</button>
 </div>
 </div>
 </div>
@@ -126,10 +139,8 @@ placeholder="Friend's full name">
 <span id="status-message">Ready. Select a profile from the list.</span>
 </footer>
 </div><!-- /#app-wrapper -->
-    <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-
-    FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
     crossorigin="anonymous"></script>
     <!-- Application logic (must come AFTER Bootstrap JS and Supabase CDN) -->
     <script src="js/main.js"></script>
