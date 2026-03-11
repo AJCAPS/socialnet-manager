@@ -3,167 +3,188 @@
     --font-heading: 'Source Serif 4', Georgia, serif;
     --font-body: 'DM Sans', system-ui, sans-serif;
 
-    --clr-header-bg: #1e3a6e;
-    --clr-page-bg: #dde3ec;
+    /* Refined Color Palette */
+    --clr-header-bg: #1a2a4d;
+    --clr-page-bg: #f0f2f5; /* Softer light gray */
+    --clr-panel-bg: #ffffff;
+    --clr-panel-border: #e0e4e9;
 
-    --clr-panel-bg: #f7f8fa;
-    --clr-panel-border: #c8cdd8;
+    --clr-primary: #0d6efd;
+    --clr-primary-hover: #0b5ed7;
+    --clr-danger: #dc3545;
+    --clr-success: #198754;
+    
+    --clr-text-main: #212529;
+    --clr-text-muted: #6c757d;
 
-    --clr-blue: #2456b4;
+    --radius-lg: 16px;
+    --radius-md: 8px;
 
-    /* Added missing variables */
-    --clr-list-active: #2456b4;
-    --clr-status-bg: #2d4373;
-    --clr-status-text: #ffffff;
+    --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
 
-    --radius-lg: 12px;
-
-    --header-h: 64px;
-    --statusbar-h: 32px;
+    --header-h: 70px;
 }
 
-html {
-    scroll-behavior: smooth;
-}
-
+/* Base resets */
 body {
     background: var(--clr-page-bg);
     font-family: var(--font-body);
+    color: var(--clr-text-main);
+    overflow-x: hidden;
 }
 
-/* Application wrapper: full-height flex column layout */
-#app-wrapper {
-    height: calc(100% - var(--header-h));
+/* Header Styling */
+#app-header {
+    background: var(--clr-header-bg);
+    height: var(--header-h);
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    padding: 0 2rem;
+    color: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }
 
-/* Panel card styling */
+#app-title {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    margin: 0;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+/* Main Layout Padding */
+#app-wrapper {
+    min-height: calc(100vh - var(--header-h));
+    padding-bottom: 40px; /* Space for status bar */
+}
+
+/* Panel Enhancement */
 .sn-panel {
     background: var(--clr-panel-bg);
     border: 1px solid var(--clr-panel-border);
     border-radius: var(--radius-lg);
-    padding: 1rem 1.1rem;
-
-    flex: 1;
-    min-height: 0;
-    overflow: hidden;
-
-    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    padding: 1.5rem;
+    height: 100%; /* Ensure panels are equal height in the row */
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.3s ease;
 }
 
-/* Profile picture circular display */
-#profile-pic,
-.profile-thumb {
-    width: 96px;
-    height: 96px;
-    object-fit: cover;
-
-    border-radius: 50%;
-    border: 3px solid var(--clr-panel-border);
-
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+.sn-panel:hover {
+    box-shadow: var(--shadow-md);
 }
 
-/* Profile picture hover effect */
-#profile-pic:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+/* Custom Text Boxes (Status, Quote, Friends) */
+.sn-textbox {
+    background: #f8f9fa;
+    border: 1px solid #edf0f2;
+    border-radius: var(--radius-md);
+    padding: 0.75rem;
+    font-size: 0.95rem;
+    min-height: 45px;
+    color: var(--clr-text-main);
 }
 
-/* Profile list */
-#profile-list {
+.sn-textbox--tall {
+    height: 200px;
     overflow-y: auto;
 }
 
-/* Individual profile item */
+/* Profile List Styling */
+.profile-list-box {
+    height: 300px;
+    overflow-y: auto;
+    border: 1px solid #eee;
+    border-radius: var(--radius-md);
+    padding: 5px;
+}
+
 .profile-item {
-    padding: 0.55rem 0.75rem;
-    border-radius: 6px;
-    cursor: pointer;
-
-    transition: background 0.15s ease, color 0.15s ease;
-}
-
-/* Hover effect */
-.profile-item:hover {
-    background: #e8edf6;
-}
-
-/* Active profile highlight in left panel */
-#profile-list .profile-item.active {
-    background: var(--clr-list-active);
-    border-color: var(--clr-blue);
-    color: #ffffff;
-}
-
-/* Friends list container */
-#friends-list {
-    overflow-y: auto;
-}
-
-/* Friends list item in centre panel */
-#friends-list .friend-entry {
-    padding: 0.4rem 0.75rem;
-    font-size: 0.9rem;
-
-    border-radius: 6px;
+    padding: 10px 15px;
     margin-bottom: 4px;
-
-    background: #edf1f7;
-
-    transition: background 0.15s ease;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--clr-text-muted);
 }
 
-#friends-list .friend-entry:hover {
-    background: #dde5f1;
+.profile-item:hover {
+    background-color: #f1f4f9;
+    color: var(--clr-primary);
 }
 
-/* Empty state text */
-.empty-state {
-    font-size: 0.85rem;
-    color: #7b8799;
-    font-style: italic;
+.profile-item.active {
+    background-color: var(--clr-primary) !important;
+    color: white !important;
 }
 
-/* Inputs and buttons smoother look */
-input,
-button {
-    transition: all 0.15s ease;
+/* Center Panel Profile Hero */
+.profile-thumb {
+    width: 120px;
+    height: 120px;
+    border: 4px solid white;
+    box-shadow: var(--shadow-md);
+    margin-bottom: 1rem;
 }
 
-/* Status bar at bottom */
-#status-bar {
-    background: var(--clr-status-bg);
-    color: var(--clr-status-text);
+.profile-hero-name {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--clr-header-bg);
+    margin-bottom: 0.5rem;
+}
 
-    height: var(--statusbar-h);
-
-    font-size: 0.82rem;
-    font-style: italic;
-
+/* Friend Entries */
+.friend-entry {
+    background: white;
+    border: 1px solid #eef0f2;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-bottom: 6px;
+    font-weight: 500;
     display: flex;
     align-items: center;
-
-    padding: 0.5rem 1rem;
 }
 
-/* Smooth scrolling for lists */
-#profile-list,
-#friends-list {
-    scrollbar-width: thin;
+.friend-entry::before {
+    content: "•";
+    color: var(--clr-primary);
+    margin-right: 10px;
+    font-size: 1.5rem;
 }
 
-/* Small screen improvements */
+/* Fixed Status Bar */
+#status-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--clr-header-bg);
+    color: rgba(255,255,255,0.8);
+    padding: 6px 20px;
+    font-size: 0.75rem;
+    z-index: 1000;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: #ced4da;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #adb5bd;
+}
+
+/* Responsive fixes */
 @media (max-width: 768px) {
-
-    #profile-pic {
-        width: 72px;
-        height: 72px;
+    .row.g-3 > * {
+        margin-bottom: 1rem;
     }
-
-    .sn-panel {
-        padding: 0.8rem;
-    }
-
 }
