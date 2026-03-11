@@ -1,58 +1,169 @@
 /* css/style.css */
-/* Bootstrap CSS custom property overrides */
 :root {
     --font-heading: 'Source Serif 4', Georgia, serif;
     --font-body: 'DM Sans', system-ui, sans-serif;
+
     --clr-header-bg: #1e3a6e;
     --clr-page-bg: #dde3ec;
+
     --clr-panel-bg: #f7f8fa;
     --clr-panel-border: #c8cdd8;
+
     --clr-blue: #2456b4;
+
+    /* Added missing variables */
+    --clr-list-active: #2456b4;
+    --clr-status-bg: #2d4373;
+    --clr-status-text: #ffffff;
+
+    --radius-lg: 12px;
+
+    --header-h: 64px;
+    --statusbar-h: 32px;
 }
-html { scroll-behavior: smooth; }
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: var(--clr-page-bg);
+    font-family: var(--font-body);
+}
+
 /* Application wrapper: full-height flex column layout */
 #app-wrapper {
     height: calc(100% - var(--header-h));
     display: flex;
     flex-direction: column;
 }
+
 /* Panel card styling */
-.sn-panel { /* custom panel card */
+.sn-panel {
     background: var(--clr-panel-bg);
     border: 1px solid var(--clr-panel-border);
     border-radius: var(--radius-lg);
     padding: 1rem 1.1rem;
-    flex: 1; min-height: 0; overflow: hidden;
+
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
 }
+
 /* Profile picture circular display */
-#profile-pic, .profile-thumb {
+#profile-pic,
+.profile-thumb {
     width: 96px;
     height: 96px;
     object-fit: cover;
+
+    border-radius: 50%;
+    border: 3px solid var(--clr-panel-border);
+
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
 /* Profile picture hover effect */
 #profile-pic:hover {
     transform: scale(1.05);
-    transition: transform 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
-/* Friends list item in centre panel */
-#friends-list .friend-entry {
-    padding: 0.4rem 0.75rem;
-    font-size: 0.9rem;
+
+/* Profile list */
+#profile-list {
+    overflow-y: auto;
 }
+
+/* Individual profile item */
+.profile-item {
+    padding: 0.55rem 0.75rem;
+    border-radius: 6px;
+    cursor: pointer;
+
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+/* Hover effect */
+.profile-item:hover {
+    background: #e8edf6;
+}
+
 /* Active profile highlight in left panel */
 #profile-list .profile-item.active {
     background: var(--clr-list-active);
     border-color: var(--clr-blue);
     color: #ffffff;
 }
+
+/* Friends list container */
+#friends-list {
+    overflow-y: auto;
+}
+
+/* Friends list item in centre panel */
+#friends-list .friend-entry {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.9rem;
+
+    border-radius: 6px;
+    margin-bottom: 4px;
+
+    background: #edf1f7;
+
+    transition: background 0.15s ease;
+}
+
+#friends-list .friend-entry:hover {
+    background: #dde5f1;
+}
+
+/* Empty state text */
+.empty-state {
+    font-size: 0.85rem;
+    color: #7b8799;
+    font-style: italic;
+}
+
+/* Inputs and buttons smoother look */
+input,
+button {
+    transition: all 0.15s ease;
+}
+
 /* Status bar at bottom */
 #status-bar {
     background: var(--clr-status-bg);
+    color: var(--clr-status-text);
+
     height: var(--statusbar-h);
+
     font-size: 0.82rem;
     font-style: italic;
+
     display: flex;
     align-items: center;
+
     padding: 0.5rem 1rem;
+}
+
+/* Smooth scrolling for lists */
+#profile-list,
+#friends-list {
+    scrollbar-width: thin;
+}
+
+/* Small screen improvements */
+@media (max-width: 768px) {
+
+    #profile-pic {
+        width: 72px;
+        height: 72px;
+    }
+
+    .sn-panel {
+        padding: 0.8rem;
+    }
+
 }
