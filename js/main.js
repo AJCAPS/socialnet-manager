@@ -72,19 +72,28 @@ setStatus(`Displaying ${profile.name}.`)
 * whose name property holds the friend's display name.
 */
 function renderFriendsList(friends) {
-const list = document.getElementById('friends-list')
-list.innerHTML = ''
-if (friends.length === 0) {
-list.innerHTML =
-'<p class="empty-state">No friends yet.</p>'
-return
-}
-friends.forEach(f => {
-const div = document.createElement('div')
-div.className = 'friend-entry'
-div.textContent = f.name // f.name directly from bidirectional query // joined via friend_id -> profiles.name
-list.appendChild(div)
-})
+  const list = document.getElementById('friends-list')
+  list.innerHTML = ''
+
+  if (friends.length === 0) {
+    list.innerHTML = '<p class="empty-state">No friends yet.</p>'
+    return
+  }
+
+  friends.forEach(f => {
+    const div = document.createElement('div')
+    div.className = 'friend-entry'
+
+    // Determine which name to show:
+    // If the sender's ID is the current profile, show the receiver's name.
+    // Otherwise, show the sender's name.
+    const friendName = (f.profile_id === currentProfileId) 
+      ? f.receiver.name 
+      : f.sender.name
+
+    div.textContent = friendName
+    list.appendChild(div)
+  })
 }
 // ================================================================
 // Section 4: CRUD Functions
@@ -145,10 +154,16 @@ if (profileError) throw profileError
 // Fetch friends, joining to profiles to get each friend's name.
 // The join alias "profiles!friends_friend_id_fkey" uses the FK name
 // that Supabase generates from the column and referenced table names.
+// Inside selectProfile(profileId)
 const { data: friends, error: friendsError } = await db
-.from('friends')
-.select('profile_id, friend_id')
-.or(`profile_id.eq.${profileId},friend_id.eq.${profileId}`)
+  .from('friends')
+  .select(`
+    profile_id,
+    friend_id,
+    sender:profiles!friends_profile_id_fkey(name),
+    receiver:profiles!friends_friend_id_fkey(name)
+  `)
+  .or(`profile_id.eq.${profileId},friend_id.eq.${profileId}`)
 if (friendsError) throw friendsError
 displayProfile(profile, friends)
 } catch (err) {
