@@ -83,7 +83,7 @@ friends.forEach(f => {
 const div = document.createElement('div')
 div.className = 'friend-entry'
 div.textContent = f.name // f.name directly from bidirectional query // joined via friend_id -> profiles.name
-box.appendChild(div)
+list.appendChild(div)
 })
 }
 // ================================================================
@@ -111,9 +111,11 @@ return
 data.forEach(profile => {
 const row = document.createElement('div')
 row.className = 'profile-item'
-span.textContent = profile.name
+row.textContent = profile.name
 row.dataset.id = profile.id
-btn.addEventListener('click', () => selectProfile(profile.id))
+
+row.addEventListener('click', () => selectProfile(profile.id))
+
 container.appendChild(row)
 })
 } catch (err) {
@@ -161,7 +163,7 @@ setStatus(`Error selecting profile: ${err.message}`, true)
 * to provide a specific message instead of a generic database error.
 */
 async function addProfile() {
-const nameInput = document.getElementById('input-name')
+const nameInput = document.getElementById('input-add-name')
 const name = nameInput.value.trim()
 if (!name) {
 setStatus('Error: Name field is empty. Please enter a name.', true)
@@ -197,7 +199,7 @@ setStatus(`Error adding profile: ${err.message}`, true)
 * match and selects it in the centre panel.
 */
 async function lookUpProfile() {
-const query = document.getElementById('input-name').value.trim()
+const query = document.getElementById('input-search-name').value.trim()
 if (!query) {
 setStatus('Error: Search field is empty. Please enter a name to search.',
 true)
@@ -307,6 +309,44 @@ document.getElementById('input-picture').value = ''
 setStatus('Picture updated.')
 } catch (err) {
 setStatus(`Error updating picture: ${err.message}`, true)
+}
+}
+/**
+* changeQuote()
+* Updates the quote column for the current profile in Supabase
+* and immediately reflects the change in the centre panel.
+*/
+async function changeQuote() {
+if (!currentProfileId) {
+setStatus('Error: No profile is selected.', true)
+return
+}
+
+const newQuote = document.getElementById('input-quote').value.trim()
+
+if (!newQuote) {
+setStatus('Error: Quote field is empty.', true)
+return
+}
+
+try {
+
+const { error } = await db
+.from('profiles')
+.update({ quote: newQuote })
+.eq('id', currentProfileId)
+
+if (error) throw error
+
+document.getElementById('profile-quote').textContent = newQuote
+document.getElementById('input-quote').value = ''
+
+setStatus('Favorite quote updated.')
+
+} catch (err) {
+
+setStatus(`Error updating quote: ${err.message}`, true)
+
 }
 }
 // ================================================================
@@ -442,11 +482,11 @@ document.getElementById('input-quote')
 })
 // ── Enter key shortcuts ────────────────────────────────────────
 // Pressing Enter in the name field triggers Add Profile
-document.getElementById('input-name')
+document.getElementById('input-add-name')
 .addEventListener('keydown', e => { if (e.key === 'Enter') addProfile()
 })
 // Pressing Enter in the lookup field triggers Look Up
-document.getElementById('input-name')
+document.getElementById('input-search-name')
 .addEventListener('keydown', e => { if (e.key === 'Enter')
 lookUpProfile() })
 // Pressing Enter in the status field triggers Change Status
